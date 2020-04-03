@@ -1,0 +1,117 @@
+" if vim-plug is not installed, install it.
+if empty(glob('~/.vim/autoload/plug.vim'))
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" plugin section
+call plug#begin('~/.vim/plugged')
+
+Plug 'itchyny/lightline.vim'
+
+" Unix file operations inside vim
+Plug 'tpope/vim-eunuch'
+
+" surround region (brackets, quotes)
+Plug 'tpope/vim-surround'
+
+" HTML, CSS, JS Completation tool
+Plug 'mattn/emmet-vim'
+
+" lines changed git
+Plug 'airblade/vim-gitgutter'
+
+" Comments
+Plug 'preservim/nerdcommenter'
+
+" LaTeX
+Plug 'xuhdev/vim-latex-live-preview'
+
+" Autoformat
+Plug 'Chiel92/vim-autoformat'
+
+" Autoclose
+Plug 'Townk/vim-autoclose'
+
+" YouCompleteMe
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+" Nerdtree
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'ryanoasis/vim-devicons'
+
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+" golang
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Syntax checking 
+Plug 'vim-syntastic/syntastic'
+
+" theme
+Plug 'rakr/vim-two-firewatch'
+
+call plug#end()
+
+" lightline config
+set laststatus=2
+
+" indent tabbing etc
+set tabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
+
+" show line number
+set number
+
+" color lightline tmux
+set t_Co=256
+
+" Set viminfo path
+set viminfo+=n~/.vim/viminfo
+
+" set backspace to 2
+set backspace=2
+
+" copy & paste to system clipboard
+set clipboard^=unnamed
+
+" EMMET CONFIG
+" redefine trigger
+let g:user_emmet_leader_key=','
+
+" NERDTree
+nmap <C-b> :NERDTreeToggle<CR>
+
+" Autoclose
+let g:AutoClosePreserveDotReg = 0
+
+" Theme
+set background=dark
+let g:two_firewatch_italics=1
+colorscheme two-firewatch
+let g:airline_theme='twofirewatch'
+
+" YouCompleteMe
+let g:ycm_semantic_triggers = {
+	\	'python': ['re!\w{2}']
+	\ }
+highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
+
+" vim-latex-live-preview-settings
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'okular'
+
+" UltiSnips Trigger Config
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Set .tex file as latex (default is plaintex)
+let g:tex_flavor = 'latex'
