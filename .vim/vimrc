@@ -96,6 +96,7 @@ let g:AutoClosePreserveDotReg = 0
 set background=dark
 let g:two_firewatch_italics=1
 colorscheme two-firewatch
+hi NOrmal guibg=NONE ctermbg=NONE
 let g:airline_theme='twofirewatch'
 
 " YouCompleteMe
