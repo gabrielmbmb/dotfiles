@@ -56,15 +56,27 @@ npm() {
     npm "$@"
 }
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
-# added by travis gem
-[ -f /home/gmdev/.travis/travis.sh ] && source /home/gmdev/.travis/travis.sh
-
 # Environment variables
 export GOPATH="$HOME/Source/go"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export EDITOR="/usr/bin/vim"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# Vi Mode in ZSH
+bindkey -v
+
+precmd() { RPROMPT="" }
+function zle-line-init zle-keymap-select {
+   VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+   RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+   zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+export KEYTIMEOUT=1
