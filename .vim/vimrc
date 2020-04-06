@@ -1,13 +1,18 @@
+"""""""""""""""""""""""""""""
 " if vim-plug is not installed, install it.
+"""""""""""""""""""""""""""""
 if empty(glob('~/.vim/autoload/plug.vim'))
 	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+"""""""""""""""""""""""""""""
 " plugin section
+"""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
+" Status line
 Plug 'itchyny/lightline.vim'
 
 " Unix file operations inside vim
@@ -16,23 +21,15 @@ Plug 'tpope/vim-eunuch'
 " surround region (brackets, quotes)
 Plug 'tpope/vim-surround'
 
-" HTML, CSS, JS Completation tool
-Plug 'mattn/emmet-vim'
-
-" lines changed git
+" Git
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " Comments
 Plug 'preservim/nerdcommenter'
 
-" LaTeX
-Plug 'xuhdev/vim-latex-live-preview'
-
 " Autoformat
 Plug 'Chiel92/vim-autoformat'
-
-" Autoclose
-Plug 'Townk/vim-autoclose'
 
 " YouCompleteMe
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -41,19 +38,32 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+" Icons
 Plug 'ryanoasis/vim-devicons'
 
-" Snippets
+" Snippets Engine
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 
-" golang
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Snippetss
+Plug 'honza/vim-snippets'
 
 " Syntax checking 
 Plug 'vim-syntastic/syntastic'
 
-" theme
+" Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Python
+Plug 'nvie/vim-flake8'
+Plug 'psf/black'
+Plug 'jmcantrell/vim-virtualenv'
+
+" Vue
+Plug 'posva/vim-vue'
+Plug 'digitaltoad/vim-pug'
+
+" Theme
 Plug 'rakr/vim-two-firewatch'
 
 call plug#end()
@@ -82,37 +92,56 @@ set backspace=2
 " copy & paste to system clipboard
 set clipboard^=unnamed
 
-" EMMET CONFIG
-" redefine trigger
-let g:user_emmet_leader_key=','
-
-" NERDTree
-nmap <C-b> :NERDTreeToggle<CR>
-
+"""""""""""""""""""""""""""""
 " Autoclose
+"""""""""""""""""""""""""""""
 let g:AutoClosePreserveDotReg = 0
 
+"""""""""""""""""""""""""""""
 " Theme
+"""""""""""""""""""""""""""""
 set background=dark
 let g:two_firewatch_italics=1
 colorscheme two-firewatch
-hi NOrmal guibg=NONE ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 let g:airline_theme='twofirewatch'
 
+"""""""""""""""""""""""""""""
 " YouCompleteMe
+"""""""""""""""""""""""""""""
 let g:ycm_semantic_triggers = {
 	\	'python': ['re!\w{2}']
 	\ }
-highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
+hi Pmenu ctermfg=0 ctermbg=130 guifg=#000000 guibg=#af5f00
 
 " vim-latex-live-preview-settings
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'okular'
 
+
+"""""""""""""""""""""""""""""
 " UltiSnips Trigger Config
+"""""""""""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<C-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Set .tex file as latex (default is plaintex)
 let g:tex_flavor = 'latex'
+
+"""""""""""""""""""""""""""""
+" PYTHON RELATED
+"""""""""""""""""""""""""""""
+" flake8
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args='--config=setup.cfg'
+autocmd BufWritePost *.py call flake8#Flake8()
+
+" black
+autocmd BufWritePre *.py execute ':Black'
+
+"""""""""""""""""""""""""""""
+" NERDTree
+"""""""""""""""""""""""""""""
+nmap <C-b> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
