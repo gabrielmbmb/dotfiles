@@ -31,8 +31,13 @@ Plug 'preservim/nerdcommenter'
 " Autoformat
 Plug 'Chiel92/vim-autoformat'
 
+" Prettier
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']}
+
 " YouCompleteMe
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer' }
 
 " Nerdtree
 Plug 'preservim/nerdtree'
@@ -138,6 +143,17 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:tex_flavor = 'latex'
 
 """""""""""""""""""""""""""""
+" Syntastic
+"""""""""""""""""""""""""""""
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_loc_list_height=5
+let g:syntastic_auto_loc_list=0
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=1
+
+let g:syntastic_error_symbol=''
+let g:syntastic_warning_symbol=''
+"""""""""""""""""""""""""""""
 " PYTHON RELATED
 """""""""""""""""""""""""""""
 " flake8
@@ -147,6 +163,12 @@ autocmd BufWritePost *.py call flake8#Flake8()
 
 " black
 autocmd BufWritePre *.py execute ':Black'
+
+"""""""""""""""""""""""""""""
+" JAVASCRIPT RELATED
+"""""""""""""""""""""""""""""
+let g:syntastic_javascript_checkers = ['eslint']
+autocmd BufWritePre *.js execute ':Prettier'
 
 """""""""""""""""""""""""""""
 " NERDTree
