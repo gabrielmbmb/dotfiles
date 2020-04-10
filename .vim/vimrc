@@ -13,7 +13,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Status line
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
 
 " Unix file operations inside vim
 Plug 'tpope/vim-eunuch'
@@ -45,11 +45,14 @@ Plug 'ryanoasis/vim-devicons'
 " Snippets Engine
 Plug 'SirVer/ultisnips'
 
-" Snippetss
+" Snippets
 Plug 'honza/vim-snippets'
 
 " Syntax checking 
 Plug 'vim-syntastic/syntastic'
+
+" Focus gained
+Plug 'tmux-plugins/vim-tmux-focus-events'
 
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -64,7 +67,7 @@ Plug 'posva/vim-vue'
 Plug 'digitaltoad/vim-pug'
 
 " Theme
-Plug 'rakr/vim-two-firewatch'
+Plug 'hzchirs/vim-material'
 
 call plug#end()
 
@@ -80,9 +83,6 @@ set smartindent
 " show line number
 set number
 
-" color lightline tmux
-set t_Co=256
-
 " Set viminfo path
 set viminfo+=n~/.vim/viminfo
 
@@ -95,24 +95,32 @@ set clipboard^=unnamed
 """""""""""""""""""""""""""""
 " Autoclose
 """""""""""""""""""""""""""""
-let g:AutoClosePreserveDotReg = 0
+source ~/.vim/autoclose.vim
 
 """""""""""""""""""""""""""""
 " Theme
 """""""""""""""""""""""""""""
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  	set termguicolors
+endif
+let g:material_style='oceanic'
 set background=dark
-let g:two_firewatch_italics=1
-colorscheme two-firewatch
-hi Normal guibg=NONE ctermbg=NONE
-let g:airline_theme='twofirewatch'
-
+colorscheme vim-material
+let g:airline_theme='material'
+hi ColorColumn ctermbg=75 guibg=#82AAFF
+"""""""""""""""""""""""""""""
+" Airline
+"""""""""""""""""""""""""""""
+let g:airline_powerline_fonts=1
 """""""""""""""""""""""""""""
 " YouCompleteMe
 """""""""""""""""""""""""""""
 let g:ycm_semantic_triggers = {
 	\	'python': ['re!\w{2}']
 	\ }
-hi Pmenu ctermfg=0 ctermbg=130 guifg=#000000 guibg=#af5f00
+"hi Pmenu ctermfg=0 ctermbg=130 guifg=#000000 guibg=#af5f00
 
 " vim-latex-live-preview-settings
 autocmd Filetype tex setl updatetime=1
