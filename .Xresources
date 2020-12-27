@@ -1,38 +1,62 @@
 !------------------
 ! urxvt terminal
 !------------------
-URxvt.font: xft:FuraCode Nerd Font Mono:size=12, \
-			xft:DejaVuSansMono Nerd Font:size=12, \
+! URxvt.font: xft:FuraCode Nerd Font Mono:size=12,style=Bold \
+! 			xft:Fira Mono for Powerline:size=12, \
+! 			xft:FreeSerif:style=Regular, \
+! 			xft:unifont:style=Medium:antialias=false
+URxvt.font: xft:SauceCodePro Nerd Font:size=12,style=Regular,Medium \
 			xft:FreeSerif:style=Regular, \
 			xft:unifont:style=Medium:antialias=false
 URxvt.cursorBlink: true
 
-! Dracula color scheme
-URxvt.foreground: #F8F8F2
-URxvt.background: #282A36
-URxvt.color0:     #000000
-URxvt.color8:     #44475A
-URxvt.color1:     #FF5555
-URxvt.color9:     #FFB86C
-URxvt.color2:     #50FA7B
-URxvt.color10:    #50FA7B
-URxvt.color3:     #E6DB74
-URxvt.color11:    #F1FA8C
-URxvt.color4:     #6272A4
-URxvt.color12:    #6272A4
-URxvt.color5:     #BD93F9
-URxvt.color13:    #FF79C6
-URxvt.color6:     #8BE9FD
-URxvt.color14:    #66D9EF
-URxvt.color7:     #666666
-URxvt.color15:    #FFFFFF
+!------------------
+! xterm terminal
+!------------------
+xterm*faceName: FuraCode Nerd Font Mono
+xterm*faceSize: 12
 
-!Scrollbar
+!-------------------
+! Clickable URLs
+!-------------------
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+
+!-------------------
+! Theme
+!-------------------
+*.foreground:   #98d1ce
+*.background:   #0a0f14
+*.cursorColor:  #98d1ce
+
+*.color0:       #0a0f14
+*.color8:       #10151b
+
+*.color1:       #c33027
+*.color9:       #d26939
+
+*.color2:       #26a98b
+*.color10:      #081f2d
+
+*.color3:       #edb54b
+*.color11:      #245361
+
+*.color4:       #195465
+*.color12:      #093748
+
+*.color5:       #4e5165
+*.color13:      #888ba5
+
+*.color6:       #33859d
+*.color14:      #599caa
+
+*.color7:       #98d1ce
+*.color15:      #d3ebe9
+
+! Scrollbar
 URxvt.scrollBar: false
 
-!Transparency
-URxvt.transparent: true
-URxvt.shading: 20
 !------------------
 ! rofi
 !------------------
