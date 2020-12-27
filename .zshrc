@@ -4,6 +4,8 @@ if [ ! -f ~/.antigen.zsh ]; then
 	curl -L git.io/antigen > .antigen.zsh
 fi
 
+export TERM=xterm-256color
+
 source ~/.antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -23,16 +25,17 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme romkatv/powerlevel10k
+antigen theme bhilburn/powerlevel9k powerlevel9k
 
 # Tell Antigen that you're done.
 antigen apply
 
 # Alias
 alias open='xdg-open'
-alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.vim/vimrc"
+alias zshconfig="nvim ~/.zshrc"
+alias vimconfig="nvim ~/.vim/vimrc"
 alias reload="source ~/.zshrc"
+alias ls="colorls"
 
 # Node Version Manager Lazy Loading
 export NVM_DIR="$HOME/.nvm"
@@ -63,9 +66,6 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export EDITOR="/usr/bin/nvim"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
 # Vi Mode in ZSH
 bindkey -v
 precmd() { RPROMPT="" }
@@ -77,4 +77,15 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 export KEYTIMEOUT=1
+
+# added by travis gem
+[ -f /home/gmdev/.travis/travis.sh ] && source /home/gmdev/.travis/travis.sh
+
+# deno
+export DENO_INSTALL="/home/gmdev/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# ruby
+export PATH=$PATH:/home/gmdev/.gem/ruby/2.7.0/bin
+
 
