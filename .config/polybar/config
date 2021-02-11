@@ -29,6 +29,8 @@ alert = #bd2c40
 inactive = #7c818c
 
 [bar/main]
+wm-restack = i3
+override-redirect = false
 monitor = ${env:MONITOR:}
 tray-position = ${env:TRAY_POSITION:right}
 width = 100%
@@ -42,13 +44,14 @@ module-margin-right = 2
 tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
-font-0 = Source Sans Pro:size=11:style=bold
+font-0 = Source Sans Pro:size=12:style=SemiBold
 font-1 = Font Awesome 5 Free Regular:size=10
 font-2 = Font Awesome 5 Free Solid:size=10
 font-3 = Font Awesome 5 Brands Regular:size=10
+font-4 = Weather Icons:size=12:style=SemiBold
 
 modules-left = i3
-modules-center =
+modules-center = openweathermap-fullfeatured
 modules-right = pulseaudio brightness xkeyboard wlan bluetooth battery date
 
 [bar/bottom]
@@ -66,11 +69,11 @@ font-0 = Source Sans Pro:size=11:style=bold
 font-1 = Font Awesome 5 Free Regular:size=10
 font-2 = Font Awesome 5 Free Solid:size=10
 font-3 = Font Awesome 5 Brands Regular:size=10
-font-4 = Weather Icons:size=12:weight=bold;0
+font-4 = Weather Icons:size=12:style=bold;1
 
-modules-left = weather
+modules-left = updates-pacman-aurhelper info-hackspeed notification-spacex
 modules-center = spotify 
-modules-right = virtualbox docker filesystem memory cpu eth
+modules-right = virtualbox docker filesystem memory cpu temperature eth
 
 ; Modules
 [module/bluetooth]
@@ -221,7 +224,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = enp0s20f0u2
+interface = enp0s20f0u1u4
 interval = 3.0
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
@@ -324,10 +327,24 @@ format-prefix-foreground = #c8293f
 format = <label>
 exec = python ~/.config/polybar/spotify.py -f '{song} - {artist}'
 
-[module/weather]
+[module/updates-pacman-aurhelper]
 type = custom/script
-exec = ~/.config/polybar/forecast
-exec-if = ping openweathermap.org -c 1
+exec = ~/.config/polybar/updates-pacman-aurhelper.sh
+interval = 600
+
+[module/info-hackspeed]
+type = custom/script
+exec = ~/.config/polybar/info-hackspeed.sh
+tail = true
+
+[module/notification-spacex]
+type = custom/script
+exec = ~/.config/polybar/notification-spacex.sh
+interval = 600
+
+[module/openweathermap-fullfeatured]
+type = custom/script
+exec = ~/.config/polybar/openweathermap-fullfeatured.sh
 interval = 600
 label-font = 5
 

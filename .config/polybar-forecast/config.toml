@@ -1,3 +1,0 @@
-api_key = "your-weather-api-key-here"
-city_id = "3111108"
-display = "{{ temp_icon }} {{ temp_celcius }}°C {{ trend }} {{ forecast_icon }} {{ forecast_celcius }}°C"
