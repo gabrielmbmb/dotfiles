@@ -64,6 +64,9 @@ Plug 'lervag/vimtex'
 " Terraform
 Plug 'hashivim/vim-terraform'
 
+" Markdown preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
 call plug#end()
 
 " encoding
@@ -111,6 +114,7 @@ if(has("nvim"))
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 colorscheme gotham 
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 """""""""""""""""""""""""""""
 " Airline
