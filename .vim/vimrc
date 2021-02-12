@@ -348,3 +348,20 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " CoC commands
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" CoC Extensions
+let g:coc_global_extensions = [
+    \ 'coc-snippets',
+    \ 'coc-prettier',
+    \ 'coc-yaml',
+    \ 'coc-vimtex',
+    \ 'coc-vetur',
+    \ 'coc-tsserver',
+    \ 'coc-rls',
+    \ 'coc-pyright',
+    \ 'coc-markdownlint',
+    \ 'coc-go',
+    \ 'coc-cmake',
+    \ 'coc-clangd',
+    \ 'coc-json',
+    \ ]
