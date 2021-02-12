@@ -4,8 +4,6 @@ if [ ! -f ~/.antigen.zsh ]; then
 	curl -L git.io/antigen > .antigen.zsh
 fi
 
-export TERM=xterm-256color
-
 source ~/.antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -76,6 +74,10 @@ fi
 
 # Default editor
 export EDITOR="/usr/bin/nvim"
+
+# powerlevel9k
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
 
 # go
 export GOPATH="$HOME/Source/go"
