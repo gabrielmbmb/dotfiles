@@ -365,3 +365,7 @@ let g:coc_global_extensions = [
     \ 'coc-clangd',
     \ 'coc-json',
     \ ]
+
+" pyenv
+" tell nvim which virtualenv has installed the package `neovim`
+let g:python3_host_prog='$HOME/.pyenv/versions/neovim/bin/python'
