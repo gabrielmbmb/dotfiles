@@ -1,5 +1,12 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["vue", "js", "ts", "json"],
+  "coc.preferences.extensionUpdateCheck": "weekly",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "vue",
+    "js",
+    "ts",
+    "json",
+    "python"
+  ],
   "python.formatting.provider": "black",
   "python.jediEnabled": false,
   "python.linting.flake8Enabled": true,
