@@ -255,6 +255,8 @@ exec --no-startup-id nm-applet &
 exec --no-startup-id safeeyes --disable &
 exec --no-startup-id slack --startup &
 exec --no-startup-id emote &
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent &
+exec --no-startup-id redshift-gtk &
 
 # colors
 client.focused          #C8293F #FF6C40 #FFFFFF #FFDBC5   #C8293F
