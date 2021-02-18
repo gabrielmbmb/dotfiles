@@ -5,16 +5,13 @@
 ! 			xft:Fira Mono for Powerline:size=12, \
 ! 			xft:FreeSerif:style=Regular, \
 ! 			xft:unifont:style=Medium:antialias=false
-URxvt.font: xft:SauceCodePro Nerd Font:size=11,style=Regular,Medium \
+! URxvt.font: xft:SauceCodePro Nerd Font:size=11,style=Regular,Medium \
+!			xft:FreeSerif:style=Regular, \
+!			xft:unifont:style=Medium:antialias=false
+URxvt.font: xft:CaskaydiaCove Nerd Font Mono:size=11,style=Book \
 			xft:FreeSerif:style=Regular, \
 			xft:unifont:style=Medium:antialias=false
 URxvt.cursorBlink: true
-
-!------------------
-! xterm terminal
-!------------------
-xterm*faceName: FuraCode Nerd Font Mono
-xterm*faceSize: 12
 
 !-------------------
 ! Clickable URLs
