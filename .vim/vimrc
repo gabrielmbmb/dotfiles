@@ -369,7 +369,14 @@ let g:coc_global_extensions = [
     \ 'coc-cmake',
     \ 'coc-clangd',
     \ 'coc-json',
+    \ 'coc-git',
     \ ]
+
+" ctrlp
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
+    \ 'AcceptSelection("t")': ['<cr>'],
+    \ }
 
 " pyenv
 " tell nvim which virtualenv has installed the package `neovim`
