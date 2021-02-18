@@ -169,6 +169,11 @@ let NERDTreeAutoDeleteBuffer=1
 let g:WebDevIconsUnicodeDecorateFolderNodes=1
 
 """""""""""""""""""""""""""""
+" nerdtree
+"""""""""""""""""""""""""""""
+let g:NERDTreeGitStatusUseNerdFonts=1
+
+"""""""""""""""""""""""""""""
 " vimtex
 """""""""""""""""""""""""""""
 let g:tex_flavor = 'latex'
@@ -368,4 +373,5 @@ let g:coc_global_extensions = [
 
 " pyenv
 " tell nvim which virtualenv has installed the package `neovim`
+let g:python_host_prog='$HOME/.pyenv/versions/neovim2/bin/python'
 let g:python3_host_prog='$HOME/.pyenv/versions/neovim/bin/python'
