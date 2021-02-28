@@ -67,6 +67,9 @@ Plug 'hashivim/vim-terraform'
 " Markdown preview
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
+" Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 call plug#end()
 
 " encoding
@@ -158,20 +161,16 @@ endfunction
 " NERDTree
 """""""""""""""""""""""""""""
 nmap <C-b> :NERDTreeToggle<CR>
-let NERDTreeShowHidden=1
-let NERDTreeMinimalUI=1
-let NERDTreeDirArrows=1
-let NERDTreeAutoDeleteBuffer=1
+let g:NERDTreeShowHidden=1
+let g:NERDTreeMinimalUI=1
+let g:NERDTreeDirArrows=1
+let g:NERDTreeAutoDeleteBuffer=1
+let g:NERDTreeGitStatusUseNerdFonts=1
 
 """""""""""""""""""""""""""""
 " devicons
 """""""""""""""""""""""""""""
 let g:WebDevIconsUnicodeDecorateFolderNodes=1
-
-"""""""""""""""""""""""""""""
-" nerdtree
-"""""""""""""""""""""""""""""
-let g:NERDTreeGitStatusUseNerdFonts=1
 
 """""""""""""""""""""""""""""
 " vimtex
@@ -192,6 +191,24 @@ let g:vimtex_compiler_latexmk = {
     \ ],
     \}
 let g:vimtex_latexmk_progname = '/usr/bin/nvr'
+
+"""""""""""""""""""""""""""""
+" vim-go
+"""""""""""""""""""""""""""""
+
+" Go syntax highlighting
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+
+" Format on save and importing
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+
+" Show var type info in status line
+let g:go_auto_type_info = 1
 
 """""""""""""""""""""""""""""
 " coc
@@ -369,14 +386,7 @@ let g:coc_global_extensions = [
     \ 'coc-cmake',
     \ 'coc-clangd',
     \ 'coc-json',
-    \ 'coc-git',
     \ ]
-
-" ctrlp
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
-    \ 'AcceptSelection("t")': ['<cr>'],
-    \ }
 
 " pyenv
 " tell nvim which virtualenv has installed the package `neovim`
