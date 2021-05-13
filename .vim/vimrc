@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""
-" if vim-plug is not installed, install it.
+" install vim plug
 """""""""""""""""""""""""""""
 if empty(glob('~/.vim/autoload/plug.vim'))
 	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -12,25 +12,6 @@ endif
 """""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-" Status line
-Plug 'vim-airline/vim-airline'
-
-" Unix file operations inside vim
-Plug 'tpope/vim-eunuch'
-
-" surround region (brackets, quotes)
-Plug 'tpope/vim-surround'
-
-" Git
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-
-" Comments
-Plug 'preservim/nerdcommenter'
-
-" coc
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " Nerdtree
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -39,38 +20,49 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Icons
 Plug 'ryanoasis/vim-devicons'
 
-" Focus gained
+" Status line
+Plug 'vim-airline/vim-airline'
+
+" Telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" Diff
+Plug 'sindrets/diffview.nvim'
+
+" Git
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+" coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Tmux
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'christoomey/vim-tmux-navigator'
 
 " HTML
 Plug 'alvan/vim-closetag'
-Plug 'digitaltoad/vim-pug'
 
 " Vue
 Plug 'posva/vim-vue'
 
-" tmux integration
-Plug 'christoomey/vim-tmux-navigator'
-
-" ctags
-Plug 'ctrlpvim/ctrlp.vim'
-
 " Theme
 Plug 'whatyouhide/vim-gotham'
-
-" Latex
-Plug 'lervag/vimtex'
-
-" Terraform
-Plug 'hashivim/vim-terraform'
-
-" Markdown preview
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" Haskell
+Plug 'neovimhaskell/haskell-vim'
+
+
 call plug#end()
+
+"""""""""""""""""""""""""""""
+" nvim base config
+"""""""""""""""""""""""""""""
 
 " encoding
 set encoding=UTF-8
@@ -102,60 +94,11 @@ set number relativenumber
 set nu rnu
 
 """""""""""""""""""""""""""""
-" Autoclose
-"""""""""""""""""""""""""""""
-source ~/.vim/autoclose.vim
-
-"""""""""""""""""""""""""""""
 " Theme
 """""""""""""""""""""""""""""
-set t_Co=256
-if (has("termguicolors"))
-    set termguicolors
-endif
-if(has("nvim"))
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
+set termguicolors
 colorscheme gotham 
 highlight ColorColumn ctermbg=0 guibg=lightgrey
-
-"""""""""""""""""""""""""""""
-" Airline
-"""""""""""""""""""""""""""""
-let g:airline_powerline_fonts=1
-
-"""""""""""""""""""""""""""""
-" Ctrlp
-"""""""""""""""""""""""""""""
-nnoremap <Leader>. :CtrlPTag<cr>
-
-"""""""""""""""""""""""""""""
-" html autoclose
-"""""""""""""""""""""""""""""
-let g:closetag_filenames = "*.html, *.xhtml, *.xml, *.vue, *.js, *.jsx"
-
-"""""""""""""""""""""""""""""
-" nerdcommenter with vue
-"""""""""""""""""""""""""""""
-let g:ft = ''
-function! NERDCommenter_before()
-  if &ft == 'vue'
-    let g:ft = 'vue'
-    let stack = synstack(line('.'), col('.'))
-    if len(stack) > 0
-      let syn = synIDattr((stack)[0], 'name')
-      if len(syn) > 0
-        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
-      endif
-    endif
-  endif
-endfunction
-function! NERDCommenter_after()
-  if g:ft == 'vue'
-    setf vue
-    let g:ft = ''
-  endif
-endfunction
 
 """""""""""""""""""""""""""""
 " NERDTree
@@ -168,29 +111,14 @@ let g:NERDTreeAutoDeleteBuffer=1
 let g:NERDTreeGitStatusUseNerdFonts=1
 
 """""""""""""""""""""""""""""
-" devicons
+" Airline
 """""""""""""""""""""""""""""
-let g:WebDevIconsUnicodeDecorateFolderNodes=1
+let g:airline_powerline_fonts=1
 
 """""""""""""""""""""""""""""
-" vimtex
+" html autoclose
 """""""""""""""""""""""""""""
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
-let g:vimtex_compiler_latexmk = {
-    \ 'build_dir' : './build',
-    \ 'callback' : 1,
-    \ 'continuous' : 1,
-    \ 'executable' : 'latexmk',
-    \ 'hooks' : [],
-    \ 'options' : [
-    \   '-verbose',
-    \   '-file-line-error',
-    \   '-synctex=1',
-    \   '-interaction=nonstopmode',
-    \ ],
-    \}
-let g:vimtex_latexmk_progname = '/usr/bin/nvr'
+let g:closetag_filenames = "*.html, *.xhtml, *.xml, *.vue, *.js, *.jsx"
 
 """""""""""""""""""""""""""""
 " vim-go
@@ -205,10 +133,43 @@ let g:go_highlight_operators = 1
 
 " Format on save and importing
 let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
+
+" Lint on save
+let g:go_metalinter_command = 'golangci-lint'
+let g:go_metalinter_autosave = 1
 
 " Show var type info in status line
 let g:go_auto_type_info = 1
+
+"""""""""""""""""""""""""""""
+" haskell-vim
+"""""""""""""""""""""""""""""
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+" indent
+let g:haskell_indent_disable = 1
+
+"""""""""""""""""""""""""""""
+" pyenv
+"""""""""""""""""""""""""""""
+" tell nvim which virtualenv has installed the package `neovim`
+let g:python_host_prog='$HOME/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog='$HOME/.pyenv/versions/neovim/bin/python'
+
+"""""""""""""""""""""""""""""
+" Telescope
+"""""""""""""""""""""""""""""
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 """""""""""""""""""""""""""""
 " coc
@@ -388,7 +349,3 @@ let g:coc_global_extensions = [
     \ 'coc-json',
     \ ]
 
-" pyenv
-" tell nvim which virtualenv has installed the package `neovim`
-let g:python_host_prog='$HOME/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog='$HOME/.pyenv/versions/neovim/bin/python'

@@ -1,12 +1,13 @@
 #!/bin/sh
+
 # shellcheck disable=SC2016,SC2059
 
-KEYBOARD_ID="AT Translated Set 2 keyboard"
+KEYBOARD_ID="16"
 
 # cpm: characters per minute
 # wpm: words per minute (1 word = 5 characters)
-METRIC=cpm
-FORMAT=" %d $METRIC"
+METRIC=wpm
+FORMAT="%d $METRIC"
 
 INTERVAL=20
 

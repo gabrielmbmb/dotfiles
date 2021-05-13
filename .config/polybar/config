@@ -51,7 +51,7 @@ font-3 = Font Awesome 5 Brands Regular:size=10
 font-4 = Weather Icons:size=12:style=SemiBold
 
 modules-left = i3
-modules-center = openweathermap-fullfeatured
+modules-center = 
 modules-right = pulseaudio brightness xkeyboard wlan bluetooth battery date
 
 [bar/bottom]
@@ -71,8 +71,9 @@ font-2 = Font Awesome 5 Free Solid:size=10
 font-3 = Font Awesome 5 Brands Regular:size=10
 font-4 = Weather Icons:size=12:style=bold;1
 
-modules-left = updates-pacman-aurhelper info-hackspeed notification-spacex
-modules-center = spotify 
+modules-left = updates-pacman-aurhelper info-hackspeed 
+# modules-center = spotify spotify-prev spotify-play-pause spotify-next
+modules-center = 
 modules-right = virtualbox docker filesystem memory cpu temperature eth
 
 ; Modules
@@ -303,6 +304,7 @@ label-discharging = %percentage%%
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
+base-temperature = 30
 warn-temperature = 60
 format = <ramp> <label>
 format-underline = #f50a4d
@@ -321,19 +323,45 @@ ramp-foreground = ${colors.foreground-alt}
 
 [module/spotify]
 type = custom/script
-interval = 1
+tail = true
+; prefix symbol is shown before the text
 format-prefix = " "
-format-prefix-foreground = #c8293f
+format-prefix-foreground = ${colors.foreground-alt}
 format = <label>
-exec = python ~/.config/polybar/spotify.py -f '{song} - {artist}'
+exec = ~/.config/polybar/scroll_spotify_status.sh
+
+[module/spotify-prev]
+type = custom/script
+exec = echo ""
+format = <label>
+format-foreground = ${colors.foreground-alt}
+click-left = playerctl previous spotifyd
+
+[module/spotify-play-pause]
+type = custom/ipc
+hook-0 = echo ""
+hook-1 = echo ""
+initial = 1
+click-left = playerctl play-pause spotifyd
+
+[module/spotify-next]
+type = custom/script
+exec = echo ""
+format = <label>
+format-foreground = ${colors.foreground-alt}
+click-left = playerctl next spotifyd
 
 [module/updates-pacman-aurhelper]
 type = custom/script
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/updates-pacman-aurhelper.sh
 interval = 600
 
 [module/info-hackspeed]
 type = custom/script
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/info-hackspeed.sh
 tail = true
 
