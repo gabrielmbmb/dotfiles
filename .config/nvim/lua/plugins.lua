@@ -1,22 +1,23 @@
 return require('packer').startup(function()
-    
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
 
     -- Theme
     use {'folke/tokyonight.nvim'}
 
-    -- Status line
+    -- Status and buffer lines
     use {
         'hoob3rt/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
+    use {
+        'akinsho/nvim-bufferline.lua',
+        requires = {'kyazdani42/nvim-web-devicons'}
+    }
+
     -- File tree
     use {'kyazdani42/nvim-tree.lua'}
-
-    -- Tabs
-    -- use {'romgrk/barbar.nvim'}
 
     -- Tmux
     use {'christoomey/vim-tmux-navigator'}
@@ -82,4 +83,10 @@ return require('packer').startup(function()
 
     -- Commentaries
     use {'b3nj5m1n/kommentary'}
+
+    -- Vimpeccable
+    use {'svermeulen/vimpeccable'}
+
+    -- Diffview
+    use {'sindrets/diffview.nvim'}
 end)
