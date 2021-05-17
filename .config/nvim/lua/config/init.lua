@@ -2,7 +2,10 @@
 require('config.colorscheme')
 
 -- File tree
-require('config.filetree')
+require('config.nvimtree')
 
 -- Status line
-require('config.statusline')
+require('config.lualine')
+
+-- Kommentary
+require('config.kommentary')

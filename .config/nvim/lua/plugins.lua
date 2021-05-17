@@ -58,4 +58,28 @@ return require('packer').startup(function()
 
     -- HTML
     use {'alvan/vim-closetag'}
+
+    -- Indent guides
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        branch = 'lua',
+    }
+
+    -- Show keybindings cheatsheet in a popup
+    use {
+        'folke/which-key.nvim',
+        config = function()
+        require("which-key").setup {}
+        end
+    }
+
+    -- Markdown preview
+    use {
+        'npxbr/glow.nvim',
+        branch = 'main',
+        run = ':GlowInstall',
+    }
+
+    -- Commentaries
+    use {'b3nj5m1n/kommentary'}
 end)
