@@ -15,7 +15,7 @@ require('bufferline').setup {
         max_name_length = 18,
         max_prefix_length = 15,
         tab_size = 18,
-        diagnostics = 'nvim_lsp',
+        diagnostics = false,
         diagnostics_indicator = function(count, level, diagnostics_dict)
             return '('..count..')'
         end,
@@ -25,7 +25,7 @@ require('bufferline').setup {
         show_close_icon = true,
         show_tab_indicators = true,
         persist_buffer_sort = true, 
-        separator_style = 'thick',
+        separator_style = 'slant',
         enforce_regular_tabs = true,
         always_show_bufferline = true,
         sort_by = 'extension'
@@ -38,10 +38,10 @@ require('bufferline').setup {
 vimp.nmap(']b', '<cmd>BufferLineCycleNext<CR>')
 vimp.nmap('b]', '<cmd>BufferLineCyclePrev<CR>')
 
--- Move current buffer backwards or forward
-vimp.nmap('<leader>bn', '<cmd>BufferLineCycleNext<CR>')
-vimp.nmap('<leader>bp', '<cmd>BufferLineCyclePrev<CR>')
+-- Move current buffer backwards or forwards
+vimp.nmap('<leader>bn', '<cmd>BufferLineMoveNext<CR>')
+vimp.nmap('<leader>bp', '<cmd>BufferLineMovePrev<CR>')
 
 -- Sort buffers
 vimp.nmap('<leader>be', '<cmd>BufferLineSortByExtension<CR>')
-vimp.nmap('<leader>bp', '<cmd>BufferLineSortByDirectory<CR>')
+vimp.nmap('<leader>bd', '<cmd>BufferLineSortByDirectory<CR>')

@@ -15,3 +15,6 @@ require('config.bufferline')
 
 -- Diffview
 require('config.diffview')
+
+-- Glow (markdown preview)
+require('config.glow')
