@@ -3,6 +3,8 @@ local tree_cb = require('nvim-tree.config').nvim_tree_callback
 local vimp = require('vimp')
 
 vimp.nnoremap('<C-b>', ':NvimTreeToggle<CR>')
+vimp.nnoremap('<leader>r', ':NvimTreeRefresh<CR>')
+vimp.nnoremap('<leader>n', ':NvimTreeFindFile<CR>')
 
 vim.g.nvim_tree_bindings = {
     -- default mappings

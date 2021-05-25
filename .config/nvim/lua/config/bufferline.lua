@@ -35,8 +35,8 @@ require('bufferline').setup {
 -- Mappings
 
 -- Navigate through buffers
-vimp.nmap(']b', '<cmd>BufferLineCycleNext<CR>')
-vimp.nmap('b]', '<cmd>BufferLineCyclePrev<CR>')
+vimp.nmap('gt', '<cmd>BufferLineCycleNext<CR>')
+vimp.nmap('gT', '<cmd>BufferLineCyclePrev<CR>')
 
 -- Move current buffer backwards or forwards
 vimp.nmap('<leader>bn', '<cmd>BufferLineMoveNext<CR>')

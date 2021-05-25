@@ -18,3 +18,6 @@ require('config.diffview')
 
 -- Glow (markdown preview)
 require('config.glow')
+
+-- Telescope
+require('config.telescope')

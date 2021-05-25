@@ -89,4 +89,7 @@ return require('packer').startup(function()
 
     -- Diffview
     use {'sindrets/diffview.nvim'}
+
+    -- Neovim Lua Development
+    use {'tjdevries/nlua.nvim'}
 end)
