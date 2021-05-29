@@ -21,3 +21,9 @@ require('config.glow')
 
 -- Telescope
 require('config.telescope')
+
+-- vim-closetag
+require('config.closetag')
+
+-- vim-go
+require('config.go')

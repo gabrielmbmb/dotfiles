@@ -75,6 +75,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/coc.nvim"
   },
+  ["diffview.nvim"] = {
+    loaded = true,
+    path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/diffview.nvim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
@@ -94,6 +98,10 @@ _G.packer_plugins = {
   ["lualine.nvim"] = {
     loaded = true,
     path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/lualine.nvim"
+  },
+  ["nlua.nvim"] = {
+    loaded = true,
+    path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/nlua.nvim"
   },
   ["nvim-bufferline.lua"] = {
     loaded = true,
