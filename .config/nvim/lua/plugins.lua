@@ -11,10 +11,14 @@ return require('packer').startup(function()
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
 
+    -- Buffer line
     use {
         'akinsho/nvim-bufferline.lua',
         requires = {'kyazdani42/nvim-web-devicons'}
     }
+
+    -- Treesitter
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
     -- File tree
     use {'kyazdani42/nvim-tree.lua'}
@@ -83,6 +87,7 @@ return require('packer').startup(function()
 
     -- Commentaries
     use {'b3nj5m1n/kommentary'}
+    use {'JoosepAlviste/nvim-ts-context-commentstring', after = {'nvim-treesitter'}}
 
     -- Vimpeccable
     use {'svermeulen/vimpeccable'}

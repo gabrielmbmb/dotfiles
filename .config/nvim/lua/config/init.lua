@@ -27,3 +27,6 @@ require('config.closetag')
 
 -- vim-go
 require('config.go')
+
+-- treesitter
+require('config.treesitter')

@@ -111,6 +111,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
   },
+  ["nvim-ts-context-commentstring"] = {
+    loaded = true,
+    path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/nvim-ts-context-commentstring"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/gmdev/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
