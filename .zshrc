@@ -23,7 +23,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme bhilburn/powerlevel9k powerlevel9k
+# antigen theme bhilburn/powerlevel9k powerlevel9k
 
 # Tell Antigen that you're done.
 antigen apply
@@ -36,7 +36,7 @@ alias open='mimeo'
 alias zshconfig="nvim ~/.zshrc"
 alias vimconfig="nvim ~/.vim/vimrc"
 alias reload="source ~/.zshrc"
-alias ls="colorls"
+alias lc="colorls"
 
 # Vi Mode in ZSH
 bindkey -v
@@ -79,27 +79,14 @@ export EDITOR="/usr/bin/nvim"
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
 
-# go
-export GOPATH="$HOME/Source/go"
-
-# rust
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$GOPATH/bin:$PATH"
-
-# added by travis gem
-[ -f /home/gmdev/.travis/travis.sh ] && source /home/gmdev/.travis/travis.sh
-
-# deno
-export DENO_INSTALL="/home/gmdev/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
 # ruby
-export PATH=$PATH:/home/gmdev/.gem/ruby/2.7.0/bin
+export PATH=$PATH:/home/gabriel/.local/share/gem/ruby/3.0.0/bin
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+
+# startship
+eval "$(starship init zsh)"
 
