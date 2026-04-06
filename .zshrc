@@ -114,32 +114,6 @@ if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
-# Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-path_prepend "$PYENV_ROOT/bin"
-if command -v pyenv >/dev/null 2>&1; then
-  eval "$(pyenv init - zsh)"
-fi
-
 # Secrets (optional)
 [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
 
-# pnpm (portable)
-if [ -d "$HOME/Library/pnpm" ]; then
-  export PNPM_HOME="$HOME/Library/pnpm"
-elif [ -d "$HOME/.local/share/pnpm" ]; then
-  export PNPM_HOME="$HOME/.local/share/pnpm"
-fi
-[ -n "$PNPM_HOME" ] && path_prepend "$PNPM_HOME"
-
-# LM Studio CLI (optional)
-path_append "$HOME/.lmstudio/bin"
-
-# gvm (optional)
-[ -s "$HOME/.gvm/scripts/gvm" ] && source "$HOME/.gvm/scripts/gvm"
-
-# Antigravity (optional)
-path_prepend "$HOME/.antigravity/antigravity/bin"
-
-# Opencode (optional)
-path_prepend "$HOME/.opencode/bin"
