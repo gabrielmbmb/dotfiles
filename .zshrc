@@ -97,6 +97,10 @@ export VISUAL="$EDITOR"
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 
+# pnpm global bin
+export PNPM_HOME="$HOME/.local/share/pnpm"
+path_prepend "$PNPM_HOME"
+
 # Ruby user gem bin (dynamic)
 if command -v ruby >/dev/null 2>&1; then
   ruby_user_bin="$(ruby -r rubygems -e 'print Gem.user_dir' 2>/dev/null)/bin"
