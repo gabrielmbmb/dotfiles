@@ -19,6 +19,16 @@ path_append() {
   esac
 }
 
+# Prepend even if the directory does not exist yet (useful for late-installed tools).
+path_prepend_any() {
+  local dir="$1"
+  [ -n "$dir" ] || return 0
+  case ":$PATH:" in
+    *":$dir:"*) ;;
+    *) export PATH="$dir:$PATH" ;;
+  esac
+}
+
 # ------------------------------
 # Antigen / Oh My Zsh
 # ------------------------------
@@ -98,8 +108,8 @@ path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 
 # pnpm global bin
-export PNPM_HOME="$HOME/.local/share/pnpm"
-path_prepend "$PNPM_HOME"
+export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
+path_prepend_any "$PNPM_HOME"
 
 # Ruby user gem bin (dynamic)
 if command -v ruby >/dev/null 2>&1; then
