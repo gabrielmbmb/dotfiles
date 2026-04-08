@@ -1,35 +1,4 @@
 # ------------------------------
-# Helpers
-# ------------------------------
-path_prepend() {
-  local dir="$1"
-  [ -d "$dir" ] || return 0
-  case ":$PATH:" in
-    *":$dir:"*) ;;
-    *) export PATH="$dir:$PATH" ;;
-  esac
-}
-
-path_append() {
-  local dir="$1"
-  [ -d "$dir" ] || return 0
-  case ":$PATH:" in
-    *":$dir:"*) ;;
-    *) export PATH="$PATH:$dir" ;;
-  esac
-}
-
-# Prepend even if the directory does not exist yet (useful for late-installed tools).
-path_prepend_any() {
-  local dir="$1"
-  [ -n "$dir" ] || return 0
-  case ":$PATH:" in
-    *":$dir:"*) ;;
-    *) export PATH="$dir:$PATH" ;;
-  esac
-}
-
-# ------------------------------
 # Antigen / Oh My Zsh
 # ------------------------------
 if [ ! -f "$HOME/.antigen.zsh" ]; then
@@ -104,23 +73,27 @@ export VISUAL="$EDITOR"
 # ------------------------------
 # PATH setup (portable)
 # ------------------------------
-path_prepend "$HOME/.local/bin"
-path_prepend "$HOME/bin"
+# Use zsh's PATH array with uniqueness to avoid helper/function edge cases.
+typeset -U path PATH
 
-# pnpm global bin
 export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
-path_prepend_any "$PNPM_HOME"
+path=(
+  "$PNPM_HOME"
+  "$HOME/.local/bin"
+  "$HOME/bin"
+  $path
+)
 
 # Ruby user gem bin (dynamic)
 if command -v ruby >/dev/null 2>&1; then
   ruby_user_bin="$(ruby -r rubygems -e 'print Gem.user_dir' 2>/dev/null)/bin"
-  path_prepend "$ruby_user_bin"
+  path=("$ruby_user_bin" $path)
 fi
 
 # Homebrew Ruby (macOS, dynamic)
 if command -v brew >/dev/null 2>&1; then
   brew_prefix="$(brew --prefix 2>/dev/null)"
-  path_prepend "$brew_prefix/opt/ruby/bin"
+  path=("$brew_prefix/opt/ruby/bin" $path)
 fi
 
 # Starship
