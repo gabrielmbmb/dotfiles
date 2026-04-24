@@ -1,4 +1,44 @@
 local map = vim.keymap.set
+local uv = vim.uv or vim.loop
+
+local function rename_current_file()
+	local old_path = vim.api.nvim_buf_get_name(0)
+	if old_path == "" then
+		vim.notify("Current buffer has no file name", vim.log.levels.WARN)
+		return
+	end
+
+	local old_abs = vim.fn.fnamemodify(old_path, ":p")
+
+	vim.ui.input({
+		prompt = "Rename file: ",
+		default = old_abs,
+		completion = "file",
+	}, function(new_path)
+		if not new_path or new_path == "" then
+			return
+		end
+
+		local new_abs = vim.fn.fnamemodify(new_path, ":p")
+		if new_abs == old_abs then
+			return
+		end
+
+		if uv.fs_stat(new_abs) then
+			vim.notify("File already exists: " .. new_abs, vim.log.levels.ERROR)
+			return
+		end
+
+		local ok, err = uv.fs_rename(old_abs, new_abs)
+		if not ok then
+			vim.notify("Failed to rename file: " .. (err or "unknown error"), vim.log.levels.ERROR)
+			return
+		end
+
+		vim.cmd("file " .. vim.fn.fnameescape(new_abs))
+		vim.notify("Renamed file to " .. new_abs)
+	end)
+end
 
 local function goto_definition_first()
 	vim.lsp.buf.definition({
@@ -31,6 +71,7 @@ map("n", "<C-h>", "<C-w>h", { silent = true, desc = "Window: Focus left" })
 map("n", "<C-j>", "<C-w>j", { silent = true, desc = "Window: Focus down" })
 map("n", "<C-k>", "<C-w>k", { silent = true, desc = "Window: Focus up" })
 map("n", "<C-l>", "<C-w>l", { silent = true, desc = "Window: Focus right" })
+map("n", "<leader>fr", rename_current_file, { desc = "File: Rename current file" })
 
 -- LSP keymaps (buffer-local)
 vim.api.nvim_create_autocmd("LspAttach", {
