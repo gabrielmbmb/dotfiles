@@ -4,8 +4,24 @@ opt.number = true
 opt.relativenumber = true
 opt.signcolumn = "yes"
 
+vim.diagnostic.config({
+	underline = true,
+	severity_sort = true,
+	signs = true,
+	virtual_text = {
+		prefix = "●",
+		spacing = 2,
+		source = "if_many",
+	},
+	float = {
+		border = "rounded",
+		focusable = false,
+		source = "always",
+	},
+})
+
 if vim.fn.has("nvim-0.9") == 1 then
-  opt.statuscolumn = "%C%s%=%{v:relnum?v:relnum:v:lnum} "
+	opt.statuscolumn = "%C%s%=%{v:relnum?v:relnum:v:lnum} "
 end
 
 opt.expandtab = true
@@ -20,10 +36,10 @@ opt.clipboard = "unnamedplus"
 opt.autoread = true
 local autoread_group = vim.api.nvim_create_augroup("AutoRead", { clear = true })
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
-  group = autoread_group,
-  callback = function()
-    if vim.fn.mode() ~= "c" then
-      vim.cmd("checktime")
-    end
-  end,
+	group = autoread_group,
+	callback = function()
+		if vim.fn.mode() ~= "c" then
+			vim.cmd("checktime")
+		end
+	end,
 })

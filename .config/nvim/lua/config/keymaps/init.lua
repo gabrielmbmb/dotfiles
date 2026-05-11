@@ -63,6 +63,19 @@ local function goto_definition_first()
 	})
 end
 
+local function open_line_diagnostic()
+	vim.diagnostic.open_float(nil, {
+		focus = false,
+		scope = "cursor",
+	})
+end
+
+local function diagnostic_jump(count)
+	return function()
+		vim.diagnostic.jump({ count = count, float = true })
+	end
+end
+
 map({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 map("n", "<leader>wv", "<cmd>rightbelow vnew<cr>", { silent = true, desc = "New buffer vertical split (right)" })
@@ -72,6 +85,10 @@ map("n", "<C-j>", "<C-w>j", { silent = true, desc = "Window: Focus down" })
 map("n", "<C-k>", "<C-w>k", { silent = true, desc = "Window: Focus up" })
 map("n", "<C-l>", "<C-w>l", { silent = true, desc = "Window: Focus right" })
 map("n", "<leader>fr", rename_current_file, { desc = "File: Rename current file" })
+map("n", "gl", open_line_diagnostic, { desc = "Diagnostics: Line diagnostics" })
+map("n", "<leader>ds", open_line_diagnostic, { desc = "Diagnostics: Line diagnostics" })
+map("n", "[d", diagnostic_jump(-1), { desc = "Diagnostics: Previous" })
+map("n", "]d", diagnostic_jump(1), { desc = "Diagnostics: Next" })
 
 -- LSP keymaps (buffer-local)
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -90,9 +107,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		lsp_map("<leader>cr", vim.lsp.buf.rename, "LSP: Rename symbol")
 		lsp_map("<leader>ca", vim.lsp.buf.code_action, "LSP: Code action")
 
-		lsp_map("<leader>ds", vim.diagnostic.open_float, "Diagnostics: Line diagnostics")
-		lsp_map("[d", vim.diagnostic.goto_prev, "Diagnostics: Previous")
-		lsp_map("]d", vim.diagnostic.goto_next, "Diagnostics: Next")
+		local client = event.data and vim.lsp.get_client_by_id(event.data.client_id) or nil
+		if client and client.name == "rust_analyzer" then
+			lsp_map("<leader>cw", "<cmd>LspCargoReload<cr>", "Rust: Reload Cargo workspace")
+		end
 	end,
 })
 
