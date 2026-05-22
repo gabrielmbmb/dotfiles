@@ -63,6 +63,18 @@ local function goto_definition_first()
 	})
 end
 
+local function fzf_lsp_location(picker_name, fallback)
+	return function()
+		local ok, fzf = pcall(require, "fzf-lua")
+		if ok and fzf[picker_name] then
+			fzf[picker_name]({ jump1 = false })
+			return
+		end
+
+		fallback()
+	end
+end
+
 local function open_line_diagnostic()
 	vim.diagnostic.open_float(nil, {
 		focus = false,
@@ -98,9 +110,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		lsp_map("gd", goto_definition_first, "LSP: Go to definition")
-		lsp_map("gy", vim.lsp.buf.type_definition, "LSP: Go to type definition")
+		lsp_map("gy", fzf_lsp_location("lsp_typedefs", vim.lsp.buf.type_definition), "LSP: Go to type definition")
 		lsp_map("gD", vim.lsp.buf.declaration, "LSP: Go to declaration")
-		lsp_map("gr", vim.lsp.buf.references, "LSP: List references")
+		lsp_map("gr", fzf_lsp_location("lsp_references", vim.lsp.buf.references), "LSP: List references")
 		lsp_map("gi", vim.lsp.buf.implementation, "LSP: Go to implementation")
 		lsp_map("K", vim.lsp.buf.hover, "LSP: Hover documentation")
 		lsp_map("<leader>rn", vim.lsp.buf.rename, "LSP: Rename symbol")

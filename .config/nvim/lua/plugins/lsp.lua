@@ -31,7 +31,6 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				"rust_analyzer",
-				"basedpyright",
 				"ruff",
 				"ty",
 				"vtsls",
@@ -40,7 +39,7 @@ return {
 				"clangd",
 				"cmake",
 			},
-			automatic_enable = { exclude = { "stylua" } },
+			automatic_enable = { exclude = { "stylua", "basedpyright" } },
 		},
 	},
 
@@ -55,6 +54,47 @@ return {
 			local lspconfig = vim.lsp.config
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local ts_root_files = { "bun.lockb", "package.json", "tsconfig.json", "jsconfig.json", ".git" }
+
+			-- Keep auxiliary Python servers from returning duplicate fzf-lua symbols.
+			-- Ty remains the Python symbol source.
+			local symbol_methods = {
+				["textDocument/documentSymbol"] = true,
+				["workspace/symbol"] = true,
+			}
+
+			local function disable_symbol_providers(client)
+				client.server_capabilities.documentSymbolProvider = false
+				client.server_capabilities.workspaceSymbolProvider = false
+
+				-- Some servers can dynamically register capabilities after attach. fzf-lua
+				-- uses client:supports_method(), so force these methods off as well.
+				if client._fzf_symbols_disabled then
+					return
+				end
+
+				client._fzf_symbols_disabled = true
+				local supports_method = client.supports_method
+				client.supports_method = function(self, method, ...)
+					if type(self) == "string" then
+						method = self
+						self = client
+					end
+					if symbol_methods[method] then
+						return false
+					end
+					return supports_method(self, method, ...)
+				end
+			end
+
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("PythonLspSymbols", { clear = true }),
+				callback = function(event)
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client.name ~= "ty" and vim.bo[event.buf].filetype == "python" then
+						disable_symbol_providers(client)
+					end
+				end,
+			})
 
 			local function mason_bin(name)
 				local path = vim.fn.stdpath("data") .. "/mason/bin/" .. name
@@ -106,24 +146,6 @@ return {
 				},
 			})
 
-			lspconfig("basedpyright", {
-				capabilities = capabilities,
-				settings = {
-					basedpyright = {
-						analysis = {
-							typeCheckingMode = "off",
-						},
-					},
-					python = {
-						pythonPath = (function()
-							local py = require("config.python")
-							local venv = py.find_venv()
-							return venv and py.get_python_path(venv) or nil
-						end)(),
-					},
-				},
-			})
-
 			lspconfig("vtsls", {
 				capabilities = capabilities,
 				root_dir = function(bufnr, cb)
@@ -144,6 +166,7 @@ return {
 
 			lspconfig("ruff", {
 				capabilities = capabilities,
+				on_attach = disable_symbol_providers,
 			})
 
 			lspconfig("zls", {

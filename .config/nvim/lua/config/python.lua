@@ -100,35 +100,6 @@ function M.get_bin_path(venv_path)
   return nil
 end
 
---- Update basedpyright configuration with the new Python path
---- @param python_path string Path to the Python executable
-function M.notify_lsp(python_path)
-  if not python_path then
-    return
-  end
-
-  -- Update the default config so new clients inherit the python path.
-  vim.lsp.config("basedpyright", {
-    settings = {
-      python = {
-        pythonPath = python_path,
-      },
-    },
-  })
-
-  -- Update existing clients in-place (mirrors PyrightSetPythonPath behavior).
-  local clients = vim.lsp.get_clients({ name = "basedpyright" })
-  local python_settings = { python = { pythonPath = python_path } }
-  for _, client in ipairs(clients) do
-    if client.settings then
-      client.settings = vim.tbl_deep_extend("force", client.settings, python_settings)
-    else
-      client.config.settings = vim.tbl_deep_extend("force", client.config.settings or {}, python_settings)
-    end
-    client.notify("workspace/didChangeConfiguration", { settings = nil })
-  end
-end
-
 --- Activate a virtualenv
 --- @param venv_path string|nil Path to the virtualenv (nil to auto-detect)
 --- @param silent boolean|nil Suppress notifications
@@ -169,9 +140,6 @@ function M.activate(venv_path, silent)
     vim.env.PATH = bin_path .. M.path_sep .. (M.base_path or "")
     M.current_bin = bin_path
   end
-
-  -- Notify LSP clients
-  M.notify_lsp(python_path)
 
   if not silent then
     vim.notify("Activated: " .. venv_path, vim.log.levels.INFO)
