@@ -16,6 +16,7 @@ return {
 				objcpp = { "clang-format" },
 				cuda = { "clang-format" },
 				cmake = { "cmake_format" },
+				rust = { "rustfmt" },
 				zig = { "zigfmt" },
 				javascript = { "biome" },
 				javascriptreact = { "biome" },

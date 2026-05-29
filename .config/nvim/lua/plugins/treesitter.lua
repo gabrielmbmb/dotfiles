@@ -19,6 +19,7 @@ return {
         "css",
         "json",
         "python",
+        "rust",
         "zig",
         "vim",
         "vimdoc",
