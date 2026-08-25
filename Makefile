@@ -4,8 +4,10 @@ NVIM_SRC ?= $(HOME)/.config/nvim
 NVIM_DEST ?= .config/nvim
 ZSHRC_SRC ?= $(HOME)/.zshrc
 ZSHRC_DEST ?= .zshrc
+PI_SETTINGS_SRC ?= $(HOME)/.pi/agent/settings.json
+PI_SETTINGS_DEST ?= .pi/agent/settings.json
 
-.PHONY: sync-nvim sync-zshrc
+.PHONY: sync-nvim sync-zshrc sync-pi-settings sync-all
 sync-nvim:
 	@set -euo pipefail; \
 	if [ ! -d "$(NVIM_SRC)" ]; then \
@@ -50,3 +52,28 @@ sync-zshrc:
 	branch="$$(git branch --show-current)"; \
 	git push origin "$$branch"; \
 	echo "Synced, committed, and pushed to $$branch.";
+
+sync-pi-settings:
+	@set -euo pipefail; \
+	if [ ! -f "$(PI_SETTINGS_SRC)" ]; then \
+		echo "Source not found: $(PI_SETTINGS_SRC)"; \
+		exit 1; \
+	fi; \
+	mkdir -p "$$(dirname "$(PI_SETTINGS_DEST)")"; \
+	cp "$(PI_SETTINGS_SRC)" "$(PI_SETTINGS_DEST)"; \
+	git add "$(PI_SETTINGS_DEST)"; \
+	if git diff --cached --quiet -- "$(PI_SETTINGS_DEST)"; then \
+		echo "No changes detected in $(PI_SETTINGS_DEST). Nothing to commit."; \
+		exit 0; \
+	fi; \
+	if [ -n "$(COMMIT_MSG)" ]; then \
+		msg='$(COMMIT_MSG)'; \
+	else \
+		msg="chore(pi): sync settings.json ($$(date '+%Y-%m-%d %H:%M:%S'))"; \
+	fi; \
+	git commit -m "$$msg"; \
+	branch="$$(git branch --show-current)"; \
+	git push origin "$$branch"; \
+	echo "Synced, committed, and pushed to $$branch.";
+
+sync-all: sync-nvim sync-zshrc sync-pi-settings

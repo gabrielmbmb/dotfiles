@@ -1,0 +1,39 @@
+{
+  "lastChangelogVersion": "0.84.3",
+  "quietStartup": true,
+  "defaultProvider": "opencode-go",
+  "defaultModel": "ox-alpha-free",
+  "defaultThinkingLevel": "max",
+  "packages": [
+    "npm:@firstpick/pi-themes-bundle",
+    "npm:pi-mcp-adapter",
+    {
+      "source": "git:github.com/gabrielmbmb/pi",
+      "extensions": [
+        "+extensions/worktree.ts"
+      ]
+    },
+    "npm:pi-web-access"
+  ],
+  "enabledModels": [
+    "openai-codex/gpt-5.5",
+    "llama-cpp/unsloth/Qwen3.6-35B-A3B-MTP-GGUF",
+    "openai-codex/gpt-5.6-sol",
+    "openai-codex/gpt-5.6-luna",
+    "openai-codex/gpt-5.6-terra",
+    "openrouter/z-ai/glm-5.2",
+    "openrouter/moonshotai/kimi-k3",
+    "openrouter/deepseek/deepseek-v4-flash",
+    "openrouter/deepseek/deepseek-v4-pro",
+    "opencode-go/glm-5.2",
+    "opencode-go/kimi-k3",
+    "opencode-go/minimax-m3",
+    "opencode-go/gpt-5.6-luna",
+    "opencode-go/deepseek-v4-flash",
+    "opencode-go/deepseek-v4-pro",
+    "opencode-go/grok-4.5",
+    "opencode-go/ox-alpha-free"
+  ],
+  "theme": "tokyo-night",
+  "hideThinkingBlock": true
+}
