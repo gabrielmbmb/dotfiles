@@ -1,9 +1,6 @@
 {
   "lastChangelogVersion": "0.84.3",
   "quietStartup": true,
-  "defaultProvider": "opencode-go",
-  "defaultModel": "ox-alpha-free",
-  "defaultThinkingLevel": "max",
   "packages": [
     "npm:@firstpick/pi-themes-bundle",
     "npm:pi-mcp-adapter",
