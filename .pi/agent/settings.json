@@ -4,7 +4,6 @@
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6.1-sol",
   "packages": [
-    "npm:@firstpick/pi-themes-bundle",
     {
       "source": "git:github.com/gabrielmbmb/pi",
       "extensions": [
@@ -30,6 +29,5 @@
     "opencode-go/deepseek-v4-flash",
     "opencode-go/deepseek-v4-pro"
   ],
-  "theme": "tokyo-night",
   "hideThinkingBlock": true
 }
