@@ -1,9 +1,10 @@
 {
   "lastChangelogVersion": "0.84.3",
   "quietStartup": true,
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6.1-sol",
   "packages": [
     "npm:@firstpick/pi-themes-bundle",
-    "npm:pi-mcp-adapter",
     {
       "source": "git:github.com/gabrielmbmb/pi",
       "extensions": [
@@ -13,6 +14,7 @@
     "npm:pi-web-access"
   ],
   "enabledModels": [
+    "openai-codex/gpt-6.1-sol",
     "openai-codex/gpt-5.5",
     "openai-codex/gpt-5.6-sol",
     "openai-codex/gpt-5.6-luna",
